@@ -1,0 +1,52 @@
+# ──────────────────────────────────────────────────────────
+# Secrets — never commit real tokens, chat IDs, or API keys
+# ──────────────────────────────────────────────────────────
+secrets.py
+secrets.json
+config_local.py
+.env
+.env.*
+!.env.example
+
+# ──────────────────────────────────────────────────────────
+# Runtime data — captured by the Pi script in production
+# ──────────────────────────────────────────────────────────
+pressure_log.csv
+pressure_chart.png
+pressure.log
+*.csv
+*.log
+
+# ──────────────────────────────────────────────────────────
+# Python
+# ──────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.venv/
+venv/
+env/
+press-track/
+
+# ──────────────────────────────────────────────────────────
+# Arduino / PlatformIO build output
+# ──────────────────────────────────────────────────────────
+build/
+.pio/
+.pioenvs/
+.piolibdeps/
+*.hex
+*.elf
+*.bin
+
+# ──────────────────────────────────────────────────────────
+# Editors / OS
+# ──────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
