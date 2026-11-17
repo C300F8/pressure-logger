@@ -31,6 +31,10 @@
 ║         • header: large pressure + RISE/FALL/STBL + Δ hPa       ║
 ║         • footer: MIN · MAX · readings count                     ║
 ║         • Telegram caption unchanged from v5                     ║
+║    v6.1— fix graph clipping during rapid pressure changes:       ║
+║         • scale window starts at mean ±10 hPa (visual parity)   ║
+║         • auto-expands with 2 hPa margin when any reading falls  ║
+║           outside the fixed window (e.g. +17 hPa / 48 h)        ║
 ╠══════════════════════════════════════════════════════════════════╣
 ║  Setup:                                                          ║
 ║    sudo raspi-config → Interface Options → I2C → Enable         ║
@@ -435,9 +439,15 @@ def _draw_graph(draw: ImageDraw.Draw, history: list):
         return
 
     pressures = [p for _, p in history]
-    mean = sum(pressures) / len(pressures)
-    lo   = mean - SCALE_HALF_RANGE
-    hi   = mean + SCALE_HALF_RANGE
+    mean  = sum(pressures) / len(pressures)
+    lo    = mean - SCALE_HALF_RANGE
+    hi    = mean + SCALE_HALF_RANGE
+    # Auto-expand window if any reading falls outside ±SCALE_HALF_RANGE.
+    # 2 hPa margin keeps the topmost/bottommost dot off the edge.
+    # Preserves visual comparability on calm days while preventing
+    # clipping during rapid pressure changes (e.g. +17 hPa / 48 h).
+    lo = min(lo, min(pressures) - 2.0)
+    hi = max(hi, max(pressures) + 2.0)
 
     # ── Horizontal grid lines every 5 hPa + Y-axis labels ────────
     grid_start = math.ceil(lo / 5.0) * 5.0

@@ -38,6 +38,9 @@
 ║    v5 — replaced auto-scale with fixed ±10 hPa window           ║
 ║         centered on mean pressure; consecutive charts are now    ║
 ║         visually comparable — same slope = same pressure change  ║
+║    v5.1— fix graph clipping during rapid pressure changes:       ║
+║         • window auto-expands with 2 hPa margin when any reading ║
+║           falls outside the fixed ±10 hPa window                 ║
 ╠══════════════════════════════════════════════════════════════════╣
 ║  Setup:                                                          ║
 ║    sudo raspi-config → Interface Options → I2C → Enable         ║
@@ -293,6 +296,10 @@ def make_chart(history: list) -> Image.Image:
         mean = sum(pressures) / len(pressures)
         lo   = mean - SCALE_HALF_RANGE
         hi   = mean + SCALE_HALF_RANGE
+        # Auto-expand window if any reading falls outside ±SCALE_HALF_RANGE.
+        # 2 hPa margin keeps the topmost/bottommost dot off the edge.
+        lo   = min(lo, min(pressures) - 2.0)
+        hi   = max(hi, max(pressures) + 2.0)
         rng  = hi - lo
 
         start_col = 23 - (len(pressures) - 1)
