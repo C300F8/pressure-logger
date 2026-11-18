@@ -319,8 +319,8 @@ void drawGraph() {
   // 2 hPa margin keeps the topmost / bottommost dot off the edge.
   float lo = mean - SCALE_HALF_RANGE;
   float hi = mean + SCALE_HALF_RANGE;
-  if (minP - 2.0f < lo) lo = minP - 2.0f;
-  if (maxP + 2.0f > hi) hi = maxP + 2.0f;
+  if (minP - 5.0f < lo) lo = minP - 5.0f;  // v3.1: increased margin 2→5 hPa to avoid dot hugging the edge
+  if (maxP + 5.0f > hi) hi = maxP + 5.0f;
 
   // Grid lines every 5 hPa + Y-axis labels
   float gridStart = ceilf(lo / 5.0f) * 5.0f;
