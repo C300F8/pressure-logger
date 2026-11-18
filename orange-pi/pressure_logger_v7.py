@@ -91,7 +91,7 @@ TELEGRAM_TARGETS = [
 BASE_DIR      = Path(__file__).parent
 DATA_FILE     = BASE_DIR / "pressure_log.csv"
 IMAGE_FILE    = BASE_DIR / "pressure_chart.png"
-HISTORY_HOURS = 24
+HISTORY_HOURS = 48
 
 # Fixed ±10 hPa window centered on mean pressure of current history.
 # Same slope = same rate of pressure change across all charts.
