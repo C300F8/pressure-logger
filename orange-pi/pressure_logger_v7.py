@@ -560,7 +560,7 @@ async def send_to_telegram(history: list):
 
 def main():
     print("\n" + "=" * 55)
-    print("  Atmospheric Pressure Logger — v6 — starting")
+    print("  Atmospheric Pressure Logger — v7 — starting")
     if DEBUG:
         print("  *** DEBUG MODE ON — set DEBUG=False for production ***")
     print("=" * 55)
